@@ -39,9 +39,10 @@
             // showRegisterFormButton
             // 
             this.showRegisterFormButton.AutoSize = true;
-            this.showRegisterFormButton.Location = new System.Drawing.Point(218, 201);
+            this.showRegisterFormButton.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.showRegisterFormButton.Location = new System.Drawing.Point(254, 200);
             this.showRegisterFormButton.Name = "showRegisterFormButton";
-            this.showRegisterFormButton.Size = new System.Drawing.Size(45, 13);
+            this.showRegisterFormButton.Size = new System.Drawing.Size(57, 15);
             this.showRegisterFormButton.TabIndex = 9;
             this.showRegisterFormButton.TabStop = true;
             this.showRegisterFormButton.Text = "Sign Up";
@@ -50,15 +51,17 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(80, 201);
+            this.label2.Font = new System.Drawing.Font("Georgia", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(36, 201);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 13);
+            this.label2.Size = new System.Drawing.Size(141, 14);
             this.label2.TabIndex = 8;
             this.label2.Text = "Don\'t have an account?";
             // 
             // inputPasswordLogin
             // 
-            this.inputPasswordLogin.Location = new System.Drawing.Point(45, 141);
+            this.inputPasswordLogin.Font = new System.Drawing.Font("Georgia", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inputPasswordLogin.Location = new System.Drawing.Point(39, 141);
             this.inputPasswordLogin.Name = "inputPasswordLogin";
             this.inputPasswordLogin.Size = new System.Drawing.Size(272, 20);
             this.inputPasswordLogin.TabIndex = 7;
@@ -67,7 +70,8 @@
             // 
             // inputUsernameLogin
             // 
-            this.inputUsernameLogin.Location = new System.Drawing.Point(45, 93);
+            this.inputUsernameLogin.Font = new System.Drawing.Font("Georgia", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inputUsernameLogin.Location = new System.Drawing.Point(39, 93);
             this.inputUsernameLogin.Name = "inputUsernameLogin";
             this.inputUsernameLogin.Size = new System.Drawing.Size(272, 20);
             this.inputUsernameLogin.TabIndex = 6;
@@ -76,22 +80,27 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(127, 19);
+            this.label1.Font = new System.Drawing.Font("Georgia", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(96, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 37);
+            this.label1.Size = new System.Drawing.Size(158, 49);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Login";
+            this.label1.Text = "Sign In";
             // 
             // logginButtonContainer
             // 
-            this.logginButtonContainer.ButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(164)))), ((int)(((byte)(79)))));
+            this.logginButtonContainer.BackColor = System.Drawing.Color.Transparent;
+            this.logginButtonContainer.ButtonBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(91)))), ((int)(((byte)(150)))));
             this.logginButtonContainer.ButtonName = "logginButton";
-            this.logginButtonContainer.ButtonSize = new System.Drawing.Size(272, 39);
-            this.logginButtonContainer.ButtonText = "Sign In";
-            this.logginButtonContainer.Location = new System.Drawing.Point(45, 241);
+            this.logginButtonContainer.ButtonSize = new System.Drawing.Size(275, 40);
+            this.logginButtonContainer.ButtonText = "Login";
+            this.logginButtonContainer.ButtonTextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.logginButtonContainer.ButtonTextFont = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.logginButtonContainer.Font = new System.Drawing.Font("Georgia", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logginButtonContainer.Location = new System.Drawing.Point(38, 241);
+            this.logginButtonContainer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.logginButtonContainer.Name = "logginButtonContainer";
-            this.logginButtonContainer.Size = new System.Drawing.Size(272, 39);
+            this.logginButtonContainer.Size = new System.Drawing.Size(275, 40);
             this.logginButtonContainer.TabIndex = 10;
             this.logginButtonContainer.ButtonClick += new System.EventHandler(this.LogginButtonContainer_Click);
             // 

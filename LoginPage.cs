@@ -50,7 +50,10 @@ namespace WeatherApp
                 ViewController.ShowView(controlsToShow);
                 historyManager.ClearHistory();
                 MainForm.Instance.HeaderComponent.ModifyUserField(username);
-                
+                MainForm.Instance.HomePage.UserLoggedIn();
+
+                Auth auth = MainForm.Instance.Auth;
+                auth.Username = username;
             }
             else
             {

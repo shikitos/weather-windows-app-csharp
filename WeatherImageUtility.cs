@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class WeatherControllerUtility
 {
-    public static string GetConditionImage(Condition condition, long requestTime)
+    public static string GetConditionImage(Condition condition, string requestTime)
     {
         string timeDay = GetDayTime(requestTime);
         string conditionType = GetConditionType(condition);
@@ -21,28 +21,27 @@ public class WeatherControllerUtility
         int code = condition.Code;
 
         string category = "";
-        if (clearCodes.Contains(code))
-            category = "";
-        else if (rainyCodes.Contains(code))
-            category = "_rain";
-        else if (snowyCodes.Contains(code))
-            category = "_snow";
-        else if (rainSnowCodes.Contains(code))
-            category = "_rain_snow";
+        if (clearCodes.Contains(code)) category = "";
+        else if (rainyCodes.Contains(code)) category = "_rain";
+        else if (snowyCodes.Contains(code)) category = "_snow";
+        else if (rainSnowCodes.Contains(code)) category = "_rain_snow";
         return category;
     }
-    public static string GetDayTime(long epochTime)
+    public static string GetDayTime(string time)
     {
-        DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        DateTime dateTime = epoch.AddSeconds(epochTime).ToLocalTime();
-
-        string timeOfDay;
-        if (dateTime.Hour >= 6 && dateTime.Hour < 18)
-            timeOfDay = "Day";
-        else if (dateTime.Hour >= 18 && dateTime.Hour < 22)
-            timeOfDay = "Evening";
+        if (DateTime.TryParse(time, out DateTime dateTime))
+        {
+            if (dateTime.Hour >= 6 && dateTime.Hour < 18)
+                return "Day";
+            else if (dateTime.Hour >= 18 && dateTime.Hour < 22)
+                return "Evening";
+            else
+                return "Night";
+        }
         else
-            timeOfDay = "Night";
-        return timeOfDay;
+        {
+            return null;
+        }
     }
+
 }

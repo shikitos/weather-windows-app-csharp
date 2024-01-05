@@ -45,7 +45,6 @@ namespace WeatherApp
                 {
                     if (control.Visible)
                     {
-                        Debug.WriteLine("Currently on page - " + control.Name + " visible: " + control.Visible);
                         visibleControls.Add(control);
                     }
                 }

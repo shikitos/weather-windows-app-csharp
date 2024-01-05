@@ -25,13 +25,16 @@ namespace WeatherApp
 
         private void LogoutButton_Click(object sender, EventArgs e)
         {
+            Auth auth = MainForm.Instance.Auth;
+            auth.Username = "";
+
             ViewController.ShowView(new Control[] { MainForm.Instance.WelcomePage });
             ResetHeader();
         }
 
         public void UpdateBackButtonVisibility(bool forceUpdate = false)
         {
-            linkLabel1.Visible = forceUpdate || historyManager.GetUserHistoryLength > 0;
+            backButton.Visible = forceUpdate || historyManager.GetUserHistoryLength > 0;
         }
 
         public void ModifyUserField(string username) {
@@ -67,7 +70,7 @@ namespace WeatherApp
             historyManager.PushToHistory(currentView);
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void Back_Clicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (historyManager.GetUserHistoryLength > 0)
             {
@@ -82,6 +85,5 @@ namespace WeatherApp
 
             UpdateBackButtonVisibility();
         }
-
     }
 }

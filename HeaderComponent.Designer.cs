@@ -31,14 +31,17 @@
             this.logoutButton = new System.Windows.Forms.Button();
             this.userNameLabel = new System.Windows.Forms.Label();
             this.authButton = new System.Windows.Forms.Button();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.backButton = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // logoutButton
             // 
-            this.logoutButton.Location = new System.Drawing.Point(427, 5);
+            this.logoutButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.logoutButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.logoutButton.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logoutButton.Location = new System.Drawing.Point(427, 3);
             this.logoutButton.Name = "logoutButton";
-            this.logoutButton.Size = new System.Drawing.Size(75, 23);
+            this.logoutButton.Size = new System.Drawing.Size(75, 30);
             this.logoutButton.TabIndex = 17;
             this.logoutButton.Text = "Logout";
             this.logoutButton.UseVisualStyleBackColor = true;
@@ -48,13 +51,15 @@
             // userNameLabel
             // 
             this.userNameLabel.AutoSize = true;
+            this.userNameLabel.Font = new System.Drawing.Font("Georgia", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.userNameLabel.Location = new System.Drawing.Point(386, 10);
             this.userNameLabel.Name = "userNameLabel";
-            this.userNameLabel.Size = new System.Drawing.Size(0, 13);
+            this.userNameLabel.Size = new System.Drawing.Size(0, 17);
             this.userNameLabel.TabIndex = 16;
             // 
             // authButton
             // 
+            this.authButton.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.authButton.Location = new System.Drawing.Point(427, 5);
             this.authButton.Name = "authButton";
             this.authButton.Size = new System.Drawing.Size(75, 23);
@@ -62,18 +67,18 @@
             this.authButton.Text = "Sign In";
             this.authButton.UseVisualStyleBackColor = true;
             // 
-            // linkLabel1
+            // backButton
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.LinkColor = System.Drawing.Color.Black;
-            this.linkLabel1.Location = new System.Drawing.Point(3, 9);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(51, 17);
-            this.linkLabel1.TabIndex = 18;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "< Back";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.backButton.AutoSize = true;
+            this.backButton.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.backButton.LinkColor = System.Drawing.Color.Black;
+            this.backButton.Location = new System.Drawing.Point(3, 9);
+            this.backButton.Name = "backButton";
+            this.backButton.Size = new System.Drawing.Size(48, 16);
+            this.backButton.TabIndex = 18;
+            this.backButton.TabStop = true;
+            this.backButton.Text = "< Back";
+            this.backButton.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Back_Clicked);
             // 
             // HeaderComponent
             // 
@@ -81,12 +86,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.Controls.Add(this.linkLabel1);
+            this.Controls.Add(this.backButton);
             this.Controls.Add(this.logoutButton);
             this.Controls.Add(this.userNameLabel);
             this.Controls.Add(this.authButton);
             this.Name = "HeaderComponent";
-            this.Size = new System.Drawing.Size(505, 31);
+            this.Size = new System.Drawing.Size(505, 36);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -97,6 +102,6 @@
         private System.Windows.Forms.Button logoutButton;
         private System.Windows.Forms.Label userNameLabel;
         private System.Windows.Forms.Button authButton;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel backButton;
     }
 }

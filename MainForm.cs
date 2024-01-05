@@ -10,6 +10,7 @@ namespace WeatherApp
     {
         private readonly DatabaseController dbController;
         public static MainForm Instance { get; private set; }
+        private Auth userAuth;
 
 
         public MainForm(DatabaseController dbController)
@@ -20,6 +21,8 @@ namespace WeatherApp
 
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
+
+            userAuth = Auth.GetInstance();
         }
 
         public HeaderComponent HeaderComponent
@@ -46,6 +49,11 @@ namespace WeatherApp
         public DatabaseController DatabaseController
         {
             get { return dbController; }
+        }
+
+        public Auth Auth
+        {
+            get { return userAuth; }
         }
 
         private void MainForm_Load(object sender, System.EventArgs e)

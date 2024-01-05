@@ -9,14 +9,19 @@ namespace WeatherApp
     public partial class HomePage : UserControl
     {
         private readonly WeatherAPI weatherApi;
+        private static LinkLabel historyLink;
+        private DatabaseController dbController;
+        private bool isRegistered = false;
+        Auth auth;
 
         public HomePage()
         {
             InitializeComponent();
+            labelsGroupPanel.Visible = false;
             weatherApi = new WeatherAPI();
 
-            // addEventListener for input
             input.KeyDown += Input_KeyDown;
+            outputField.Text = "";
         }
 
         private void SubmitButton_Click(object sender, EventArgs e)
@@ -46,35 +51,47 @@ namespace WeatherApp
 
                     string weatherMotto = GetWeatherMotto(place, weatherDescription);
 
-                    outputField.Text = $"Current Weather in {place}:\n" +
+                    Debug.WriteLine("weatherJson.Location.Localtime", weatherJson.Location.Localtime);
+                    /*outputField.Text = $"Current Weather in {place}:\n" +
                                       $"- Condition: {weatherDescription}\n" +
                                       $"- Temperature: {temperatureCelsius} °C\n" +
-                                      $"{weatherMotto}";
-                    string imageName = WeatherControllerUtility.GetConditionImage(weatherJson.Current.Condition, weatherJson.Location.Localtime_Epoch);
+                                      $"{weatherMotto}";*/
+
+                    cityLabel.Text = weatherJson.Location.Name;
+                    temperatureLabel.Text = $"{temperatureCelsius} °";
+                    conditionLabel.Text = $"{weatherDescription}";
+                    labelsGroupPanel.Visible = true;
+
+                    string imageName = WeatherControllerUtility.GetConditionImage(weatherJson.Current.Condition, weatherJson.Location.Localtime);
                     string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $@"Assets\Images\{imageName}");
-                    Debug.WriteLine(imagePath);
-                    Debug.WriteLine("File.Exists(imagePath)" + File.Exists(imagePath).ToString());
+
                     if (File.Exists(imagePath))
                     {
                         Image backgroundImage = Image.FromFile(imagePath);
-
                         BackgroundImage = backgroundImage;
                         BackgroundImageLayout = ImageLayout.Stretch;
+                    }
+
+                    if (dbController != null && isRegistered)
+                    {
+                        dbController.PutHistory(auth.Username, place, temperatureCelsius, weatherDescription);
                     }
                 }
                 catch (System.Net.WebException webEx)
                 {
-                    outputField.Text = "Web Exception: " + webEx.Message;
-                    Debug.WriteLine("Web Exception: " + webEx.Message);
+                    outputField.Text = "Network error: " + webEx.Message;
+                    Debug.WriteLine("Network error: " + webEx.Message);
                 }
                 catch (Exception ex)
                 {
                     outputField.Text = "Error: " + ex.Message;
+                    Debug.WriteLine("Error: " + ex.Message);
                 }
             }
             else
             {
-                outputField.Text = "Please enter a city name.";
+                Debug.WriteLine("Please enter a valid city name");
+                outputField.Text = "Please enter a valid city name";
             }
         }
 
@@ -98,15 +115,36 @@ namespace WeatherApp
             return motto;
         }
 
-
-        private void MainPage_Load(object sender, EventArgs e)
+        private void Input_TextChanged(object sender, EventArgs e)
         {
-
+            /*if (outputField.Text.Length > 0)
+            {
+                outputField.Text = "";
+            }*/
         }
 
-        private void HomePage_Load(object sender, EventArgs e)
+        private void HistoryLabel_LinkClicked(object sender, EventArgs e)
         {
-
+            HistoryForm historyForm = new HistoryForm(auth.Username);
+            historyForm.Show();
         }
+
+        public void UserLoggedIn()
+        {
+            historyLink = new LinkLabel
+            {
+                Location = new Point(2, 80),
+                Cursor = Cursors.Hand,
+                Text = "History",
+                BackColor = Color.Transparent,
+            };
+
+            Controls.Add(historyLink);
+            historyLink.Click += HistoryLabel_LinkClicked;
+            dbController = MainForm.Instance.DatabaseController;
+            isRegistered = true;
+            auth = MainForm.Instance.Auth;
+        }
+
     }
 }

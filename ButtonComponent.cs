@@ -7,13 +7,33 @@ namespace WeatherApp
 {
     public partial class ButtonComponent : UserControl
     {
+        private readonly Button button;
+        public ButtonComponent()
+        {
+            InitializeComponent();
+
+            button = new Button();
+            button.Resize += CustomButton_Resize;
+            button.BackColor = Color.FromArgb(0, 91, 150);
+            button.FlatStyle = FlatStyle.Flat;
+            button.FlatAppearance.BorderSize = 0;
+            button.FlatAppearance.MouseDownBackColor = Color.FromArgb(1, 31, 75);
+            button.FlatAppearance.MouseOverBackColor = Color.FromArgb(1, 31, 75);
+            button.ForeColor = Color.White;
+            button.Cursor = Cursors.Hand;
+            button.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+            button.TextAlign = ContentAlignment.MiddleCenter;
+
+            this.Controls.Add(button);
+        }
+
         [Browsable(true)]
         [Category("Appearance")]
         [Description("The name of the button (inside code).")]
         public new string ButtonName
         {
-            get { return buttonComponent.Name; }
-            set { buttonComponent.Name = value; }
+            get { return button.Name; }
+            set { button.Name = value; }
         }
 
         [Browsable(true)]
@@ -21,8 +41,26 @@ namespace WeatherApp
         [Description("The size of the button.")]
         public Size ButtonSize
         {
-            get { return buttonComponent.Size; }
-            set { buttonComponent.Size = value; }
+            get { return button.Size; }
+            set { button.Size = value; }
+        }
+
+        [Browsable(true)]
+        [Category("Layout")]
+        [Description("The font of the button text.")]
+        public Font ButtonTextFont
+        {
+            get { return button.Font; }
+            set { button.Font = value; }
+        }
+
+        [Browsable(true)]
+        [Category("Layout")]
+        [Description("The text alignment of the button.")]
+        public ContentAlignment ButtonTextAlign
+        {
+            get { return button.TextAlign; }
+            set { button.TextAlign = value; }
         }
 
         [Browsable(true)]
@@ -30,8 +68,8 @@ namespace WeatherApp
         [Description("The text displayed on the button.")]
         public string ButtonText
         {
-            get { return buttonComponent.Text; }
-            set { buttonComponent.Text = value; }
+            get { return button.Text; }
+            set { button.Text = value; }
         }
 
         [Browsable(true)]
@@ -39,41 +77,19 @@ namespace WeatherApp
         [Description("The background color of the button.")]
         public Color ButtonBackColor
         {
-            get { return buttonComponent.BackColor; }
-            set { buttonComponent.BackColor = value; }
+            get { return button.BackColor; }
+            set { button.BackColor = value; }
         }
 
         public event EventHandler ButtonClick
         {
-            add { buttonComponent.Click += value; }
-            remove { buttonComponent.Click -= value; }
-        }
-
-        public ButtonComponent()
-        {
-            InitializeComponent();
-
-            this.Resize += CustomButton_Resize;
-            buttonComponent.BackColor = System.Drawing.Color.FromArgb(46, 164, 79);
-            buttonComponent.FlatStyle = FlatStyle.Flat;
-            buttonComponent.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(27, 31, 35);
-            buttonComponent.FlatAppearance.BorderSize = 1;
-            buttonComponent.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 31, 35);
-            buttonComponent.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(27, 31, 35);
-            buttonComponent.ForeColor = System.Drawing.Color.White;
-            buttonComponent.Cursor = Cursors.Hand;
-            buttonComponent.Font = new System.Drawing.Font("Segoe UI", 14, System.Drawing.FontStyle.Bold);
-            buttonComponent.TextAlign = ContentAlignment.MiddleCenter;
-        }
-
-        private void buttonComponent_Click(object sender, EventArgs e)
-        {
-
+            add { button.Click += value; }
+            remove { button.Click -= value; }
         }
 
         private void CustomButton_Resize(object sender, EventArgs e)
         {
-            buttonComponent.Size = new Size(this.ClientSize.Width, this.ClientSize.Height);
+            button.Size = new Size(this.ClientSize.Width, this.ClientSize.Height);
         }
     }
 }

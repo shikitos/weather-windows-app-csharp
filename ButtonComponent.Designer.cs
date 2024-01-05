@@ -28,26 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonComponent = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // buttonComponent
-            // 
-            this.buttonComponent.Location = new System.Drawing.Point(3, 3);
-            this.buttonComponent.Name = "buttonComponent";
-            this.buttonComponent.Size = new System.Drawing.Size(89, 34);
-            this.buttonComponent.TabIndex = 0;
-            this.buttonComponent.Text = "Button";
-            this.buttonComponent.UseVisualStyleBackColor = true;
-            this.buttonComponent.Click += new System.EventHandler(this.buttonComponent_Click);
-            // 
-            // CustomButton
+            // ButtonComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.buttonComponent);
-            this.Name = "CustomButton";
-            this.Size = new System.Drawing.Size(93, 39);
+            this.BackColor = System.Drawing.Color.Transparent;
+            this.Name = "ButtonComponent";
+            this.Size = new System.Drawing.Size(100, 30);
+            this.Resize += new System.EventHandler(CustomButton_Resize);
             this.ResumeLayout(false);
 
         }

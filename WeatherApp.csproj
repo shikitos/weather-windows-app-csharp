@@ -124,7 +124,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auth.cs" />
     <Compile Include="Cryptography.cs" />
+    <Compile Include="History.cs" />
+    <Compile Include="HistoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HistoryForm.Designer.cs">
+      <DependentUpon>HistoryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HistoryRecord.cs" />
     <Compile Include="HomePage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -181,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HeaderComponent.resx">
       <DependentUpon>HeaderComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HistoryForm.resx">
+      <DependentUpon>HistoryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HomePage.resx">
       <DependentUpon>HomePage.cs</DependentUpon>

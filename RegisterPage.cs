@@ -27,6 +27,12 @@ namespace WeatherApp
             string password = inputPasswordRegister.Text;
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
 
+            if (dbController.FindUser(username) > 0)
+            {
+                MessageBox.Show("User with that username already exists");
+                return;
+            }
+
             bool isRegistered = dbController.RegisterUser(username, hashedPassword);
             if (isRegistered)
             {
