@@ -12,6 +12,7 @@ namespace WeatherApp
         private static LinkLabel historyLink;
         private DatabaseController dbController;
         private bool isRegistered = false;
+        private HistoryController historyController;
         Auth auth;
 
         public HomePage()
@@ -72,9 +73,12 @@ namespace WeatherApp
                         BackgroundImageLayout = ImageLayout.Stretch;
                     }
 
-                    if (dbController != null && isRegistered)
+                    if (historyController != null && isRegistered)
                     {
-                        dbController.PutHistory(auth.Username, place, temperatureCelsius, weatherDescription);
+
+                        dbController = new DatabaseController();
+                        historyController.PutHistory(auth.Username, place, temperatureCelsius, weatherDescription);
+                        dbController.Dispose();
                     }
                 }
                 catch (System.Net.WebException webEx)
@@ -141,9 +145,11 @@ namespace WeatherApp
 
             Controls.Add(historyLink);
             historyLink.Click += HistoryLabel_LinkClicked;
-            dbController = MainForm.Instance.DatabaseController;
+            dbController = new DatabaseController();
+            historyController = new HistoryController(dbController.Connect());
             isRegistered = true;
             auth = MainForm.Instance.Auth;
+            dbController.Dispose();
         }
 
     }

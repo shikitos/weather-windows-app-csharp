@@ -6,10 +6,14 @@ namespace WeatherApp
     public partial class RegisterPage : UserControl
     {
         UserHistoryManager historyManager = UserHistoryManager.Instance;
+        private readonly DatabaseController dbController;
+        private readonly UserController userController;
 
         public RegisterPage()
         {
             InitializeComponent();
+            dbController = new DatabaseController();
+            userController = new UserController(dbController.Connect());
         }
 
         private void ShowLoginPageButton_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -22,18 +26,17 @@ namespace WeatherApp
 
         protected void RegisterButton_Click(object sender, EventArgs e)
         {
-            DatabaseController dbController = MainForm.Instance.DatabaseController;
             string username = inputUsernameRegister.Text;
             string password = inputPasswordRegister.Text;
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
 
-            if (dbController.FindUser(username) > 0)
+            if (userController.FindUser(username) > 0)
             {
                 MessageBox.Show("User with that username already exists");
                 return;
             }
 
-            bool isRegistered = dbController.RegisterUser(username, hashedPassword);
+            bool isRegistered = userController.RegisterUser(username, hashedPassword);
             if (isRegistered)
             {
                 MessageBox.Show("Registered successfully!");
@@ -42,6 +45,7 @@ namespace WeatherApp
             {
                 MessageBox.Show("Registration failed. Please try again.");
             }
+            dbController.Dispose();
         }
     }
 }

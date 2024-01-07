@@ -126,7 +126,7 @@
   <ItemGroup>
     <Compile Include="Auth.cs" />
     <Compile Include="Cryptography.cs" />
-    <Compile Include="History.cs" />
+    <Compile Include="HistoryController.cs" />
     <Compile Include="HistoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +140,7 @@
     <Compile Include="HomePage.Designer.cs">
       <DependentUpon>HomePage.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserController.cs" />
     <Compile Include="UserHistoryManager.cs" />
     <Compile Include="ButtonComponent.cs">
       <SubType>UserControl</SubType>

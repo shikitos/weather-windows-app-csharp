@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Windows.Forms;
 using dotenv.net;
 
@@ -41,12 +40,9 @@ namespace WeatherApp
 
             string connectionString = $"Server={DBServerAddress};Port={DBPort};User Id={DBUsername};Password={DBPassword};";
 
-            using (DatabaseController dbController = new DatabaseController(connectionString))
-            {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new MainForm(dbController));
-            }
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainForm());
         }
     }
 }

@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WeatherApp
@@ -14,6 +6,8 @@ namespace WeatherApp
     public partial class LoginPage : UserControl
     {
         UserHistoryManager historyManager = UserHistoryManager.Instance;
+        private UserController userController;
+        private DatabaseController dbController;
         public LoginPage()
         {
             InitializeComponent();
@@ -38,11 +32,12 @@ namespace WeatherApp
 
         private void LogginButtonContainer_Click(object sender, EventArgs e)
         {
-            DatabaseController dbController = MainForm.Instance.DatabaseController;
+            dbController = new DatabaseController();
+            userController = new UserController(dbController.Connect());
             string username = inputUsernameLogin.Text;
             string password = inputPasswordLogin.Text;
 
-            bool isLoggedIn = dbController.LoginUser(username, password);
+            bool isLoggedIn = userController.LoginUser(username, password);
             if (isLoggedIn)
             {
                 Control Header = MainForm.Instance.HeaderComponent;
@@ -59,6 +54,7 @@ namespace WeatherApp
             {
                 MessageBox.Show("Login failed. Please check your username and password.");
             }
+            dbController.Dispose();
         }
     }
 }

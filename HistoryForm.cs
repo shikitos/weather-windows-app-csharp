@@ -14,12 +14,13 @@ namespace WeatherApp
     public partial class HistoryForm : Form
     {
         private readonly string username;
-        DatabaseController dbController;
+        private readonly HistoryController historyController;
+        private readonly DatabaseController dbController;
         public HistoryForm(string userName)
         {
             InitializeComponent();
-
-            dbController = MainForm.Instance.DatabaseController;
+            dbController = new DatabaseController();
+            historyController = new HistoryController(dbController.Connect());
             username = userName;
             this.historyListView.Columns.Add("Location");
             this.historyListView.Columns.Add("Temperature");
@@ -41,7 +42,7 @@ namespace WeatherApp
 
         private void PopulateHistoryListView()
         {
-            List<HistoryRecord> historyRecords = dbController.GetHistoryByUsername(username);
+            List<HistoryRecord> historyRecords = historyController.GetHistoryByUsername(username);
 
             if (historyRecords == null)
             {
@@ -56,6 +57,7 @@ namespace WeatherApp
                 listItem.SubItems.Add(record.Conditions);
                 historyListView.Items.Add(listItem);
             }
+            dbController.Dispose();
         }
 
         private void historyListView_SelectedIndexChanged(object sender, EventArgs e)

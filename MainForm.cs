@@ -8,15 +8,13 @@ namespace WeatherApp
 {
     public partial class MainForm : Form
     {
-        private readonly DatabaseController dbController;
         public static MainForm Instance { get; private set; }
         private Auth userAuth;
 
 
-        public MainForm(DatabaseController dbController)
+        public MainForm()
         {
             InitializeComponent();
-            this.dbController = dbController;
             Instance = this;
 
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -46,11 +44,6 @@ namespace WeatherApp
             get { return welcomePage1; }
         }
 
-        public DatabaseController DatabaseController
-        {
-            get { return dbController; }
-        }
-
         public Auth Auth
         {
             get { return userAuth; }
@@ -62,15 +55,6 @@ namespace WeatherApp
             {
                 control.Visible = control == welcomePage1;
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                dbController?.Dispose();
-            }
-            base.Dispose(disposing);
         }
 
     }
