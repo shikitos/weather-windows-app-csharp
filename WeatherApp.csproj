@@ -143,7 +143,7 @@
       <DependentUpon>HomePage.cs</DependentUpon>
     </Compile>
     <Compile Include="UserController.cs" />
-    <Compile Include="UserHistoryManager.cs" />
+    <Compile Include="ViewHistoryManager.cs" />
     <Compile Include="ButtonComponent.cs">
       <SubType>UserControl</SubType>
     </Compile>

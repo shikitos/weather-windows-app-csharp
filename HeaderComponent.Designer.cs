@@ -39,7 +39,7 @@
             this.logoutButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.logoutButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.logoutButton.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.logoutButton.Location = new System.Drawing.Point(427, 3);
+            this.logoutButton.Location = new System.Drawing.Point(425, 1);
             this.logoutButton.Name = "logoutButton";
             this.logoutButton.Size = new System.Drawing.Size(75, 30);
             this.logoutButton.TabIndex = 17;
@@ -52,20 +52,23 @@
             // 
             this.userNameLabel.AutoSize = true;
             this.userNameLabel.Font = new System.Drawing.Font("Georgia", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userNameLabel.Location = new System.Drawing.Point(386, 10);
+            this.userNameLabel.Location = new System.Drawing.Point(325, 7);
             this.userNameLabel.Name = "userNameLabel";
             this.userNameLabel.Size = new System.Drawing.Size(0, 17);
+            this.userNameLabel.MaximumSize = new System.Drawing.Size(100, 17);
             this.userNameLabel.TabIndex = 16;
+            this.userNameLabel.Click += new System.EventHandler(this.userNameLabel_Click);
             // 
             // authButton
             // 
             this.authButton.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.authButton.Location = new System.Drawing.Point(427, 5);
+            this.authButton.Location = new System.Drawing.Point(425, 1);
             this.authButton.Name = "authButton";
-            this.authButton.Size = new System.Drawing.Size(75, 23);
+            this.authButton.Size = new System.Drawing.Size(75, 30);
             this.authButton.TabIndex = 15;
             this.authButton.Text = "Sign In";
             this.authButton.UseVisualStyleBackColor = true;
+            this.authButton.Click += new System.EventHandler(this.authButton_Click_1);
             // 
             // backButton
             // 
@@ -91,7 +94,8 @@
             this.Controls.Add(this.userNameLabel);
             this.Controls.Add(this.authButton);
             this.Name = "HeaderComponent";
-            this.Size = new System.Drawing.Size(505, 36);
+            this.Size = new System.Drawing.Size(500, 34);
+            this.Load += new System.EventHandler(this.HeaderComponent_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

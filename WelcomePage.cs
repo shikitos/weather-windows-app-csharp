@@ -6,7 +6,7 @@ namespace WeatherApp
 {
     public partial class WelcomePage : UserControl
     {
-        private readonly UserHistoryManager historyManager = UserHistoryManager.Instance;
+        private readonly ViewHistoryManager historyManager = ViewHistoryManager.Instance;
         private readonly MainForm _mainForm;
         public WelcomePage(MainForm mainForm)
         {

@@ -5,7 +5,7 @@ namespace WeatherApp
 {
     public partial class RegisterPage : UserControl
     {
-        readonly UserHistoryManager historyManager = UserHistoryManager.Instance;
+        readonly ViewHistoryManager historyManager = ViewHistoryManager.Instance;
         private readonly DatabaseController _dbController;
         private readonly UserController _userController;
         private readonly MainForm _mainForm;

@@ -35,7 +35,6 @@ namespace WeatherApp
                     command.Parameters.AddWithValue("@temperature", temperature);
                     command.Parameters.AddWithValue("@conditions", conditions);
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Successfully added to history: " + location);
                     return true;
                 }
                 catch (NpgsqlException ex)

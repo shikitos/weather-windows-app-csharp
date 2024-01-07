@@ -3,23 +3,23 @@ using System.Windows.Forms;
 
 namespace WeatherApp
 {
-    internal class UserHistoryManager
+    internal class ViewHistoryManager
     {
-        private static UserHistoryManager instance;
+        private static ViewHistoryManager instance;
 
         private readonly Stack<Control[]> historyStack = new Stack<Control[]>();
 
         public int GetUserHistoryLength => historyStack.Count;
 
-        private UserHistoryManager() { }
+        private ViewHistoryManager() { }
 
-        public static UserHistoryManager Instance
+        public static ViewHistoryManager Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new UserHistoryManager();
+                    instance = new ViewHistoryManager();
                 }
                 return instance;
             }

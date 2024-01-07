@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HistoryForm));
             this.historyListView = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
@@ -46,8 +47,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.historyListView);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "HistoryForm";
-            this.Text = "HistoryForm";
+            this.Text = "Weather History";
             this.Load += new System.EventHandler(this.HistoryForm_Load);
             this.ResumeLayout(false);
 

@@ -6,7 +6,7 @@ namespace WeatherApp
 {
     public partial class HeaderComponent : UserControl
     {
-        readonly UserHistoryManager historyManager = UserHistoryManager.Instance;
+        readonly ViewHistoryManager historyManager = ViewHistoryManager.Instance;
         private readonly MainForm _mainForm;
 
         public HeaderComponent(MainForm mainForm)
@@ -72,6 +72,21 @@ namespace WeatherApp
             }
 
             UpdateBackButtonVisibility();
+        }
+
+        private void userNameLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void authButton_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void HeaderComponent_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
