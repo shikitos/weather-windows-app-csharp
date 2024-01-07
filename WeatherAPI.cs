@@ -2,30 +2,28 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using System.Configuration;
 using Newtonsoft.Json;
 
 public class WeatherAPI
 {
-    private readonly string apiKey;
-    private readonly string baseUrl;
+    private readonly string _apiKey;
+    private readonly string _baseUrl;
 
     public WeatherAPI()
     {
-        apiKey = Environment.GetEnvironmentVariable("API_KEY");
-        baseUrl = Environment.GetEnvironmentVariable("BASE_URL");
+        _apiKey = Environment.GetEnvironmentVariable("API_KEY");
+        _baseUrl = Environment.GetEnvironmentVariable("BASE_URL");
     }
 
     public async Task<WeatherResponse> GetWeatherAsync(string city, int days)
     {
         using (HttpClient client = new HttpClient())
         {
-            string url = $"{baseUrl}forecast.json?key={apiKey}&q={city}&days={days}";
-            Debug.WriteLine("Request URL: " + url);
+            string url = $"{_baseUrl}forecast.json?key={_apiKey}&q={city}&days={days}";
 
             try
             {
-                HttpResponseMessage response = await client.GetAsync(url);
+                HttpResponseMessage response = await SendRequestAsync(url);
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
                 WeatherResponse weatherResponse = JsonConvert.DeserializeObject<WeatherResponse>(responseBody);
@@ -33,9 +31,24 @@ public class WeatherAPI
             }
             catch (HttpRequestException e)
             {
-                Debug.WriteLine("Error fetching weather data: " + e.Message);
-                throw;
+                if (e.Message.Contains("400"))
+                {
+                    throw new Exception("Invalid city name. Try again!");
+                }
+                else
+                {
+                    Debug.WriteLine("Error fetching weather data: " + e.Message);
+                    throw;
+                }
             }
+        }
+    }
+
+    private async Task<HttpResponseMessage> SendRequestAsync(string url)
+    {
+        using (HttpClient client = new HttpClient())
+        {
+            return await client.GetAsync(url);
         }
     }
 }

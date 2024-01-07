@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace WeatherApp
 {
-    internal class ViewController
+    internal static class ViewController
     {
         public static void ShowView(Control[] controlsToShow)
         {

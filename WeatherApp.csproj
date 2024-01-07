@@ -41,6 +41,9 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>WeatherApp.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
       <HintPath>packages\BCrypt.Net-Next.4.0.3\lib\net472\BCrypt.Net-Next.dll</HintPath>
@@ -125,7 +128,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Auth.cs" />
-    <Compile Include="Cryptography.cs" />
     <Compile Include="HistoryController.cs" />
     <Compile Include="HistoryForm.cs">
       <SubType>Form</SubType>
@@ -176,7 +178,9 @@
       <DependentUpon>RegisterPage.cs</DependentUpon>
     </Compile>
     <Compile Include="User.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="ViewController.cs" />
+    <Compile Include="CustomControlsProperties.cs" />
     <Compile Include="WeatherAPI.cs" />
     <Compile Include="WeatherImageUtility.cs" />
     <Compile Include="WeatherResponse.cs" />
@@ -275,6 +279,7 @@
     <Content Include="Assets\Images\Night_snow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="WeatherApp.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Assets\**\*">

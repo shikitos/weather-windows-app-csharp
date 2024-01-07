@@ -1,81 +1,107 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WeatherApp
 {
     public partial class HistoryForm : Form
     {
-        private readonly string username;
-        private readonly HistoryController historyController;
-        private readonly DatabaseController dbController;
+        private readonly string _username;
+        private HistoryController _historyController;
+        private DatabaseController _dbController;
+        private Panel panel;
+
+
         public HistoryForm(string userName)
         {
             InitializeComponent();
-            dbController = new DatabaseController();
-            historyController = new HistoryController(dbController.Connect());
-            username = userName;
-            this.historyListView.Columns.Add("Location");
-            this.historyListView.Columns.Add("Temperature");
-            this.historyListView.Columns.Add("Conditions");
-            this.historyListView.View = View.Details;
+            _username = userName;
+
+            SetupColumns();
+            SetupForm();
+            ResizeColumns();
+
+            Resize += HistoryForm_Resize;
         }
 
-
-        private void HistoryObjectApply()
+        private void SetupColumns()
         {
-            /*SettingsUpdated?.Invoke(Fetch);*/
-            Dispose();
+            historyListView.Columns.Add("Location");
+            historyListView.Columns.Add("Temperature");
+            historyListView.Columns.Add("Conditions");
+            historyListView.Columns.Add("Date");
+            historyListView.View = View.Details;
         }
+
+        private void ResizeColumns()
+        {
+            int totalWidth = historyListView.ClientSize.Width;
+
+            foreach (ColumnHeader column in historyListView.Columns)
+            {
+                column.Width = totalWidth / historyListView.Columns.Count;
+            }
+        }
+
+
+        private void SetupForm()
+        {
+            panel = new Panel
+            {
+                AutoScroll = true,
+                Dock = DockStyle.Fill
+            };
+
+            panel.Controls.Add(historyListView);
+            Controls.Add(panel);
+        }
+
+        private void HistoryForm_Resize(object sender, EventArgs e)
+        {
+            panel.Size = ClientSize;
+            historyListView.Size = panel.ClientSize;
+
+            ResizeColumns();
+        }
+
+
 
         private void HistoryForm_Load(object sender, EventArgs e)
         {
             PopulateHistoryListView();
         }
 
-        private void PopulateHistoryListView()
+        public void PopulateHistoryListView()
         {
-            List<HistoryRecord> historyRecords = historyController.GetHistoryByUsername(username);
+            historyListView.Items.Clear();
+
+            _dbController = new DatabaseController();
+            _historyController = new HistoryController(_dbController.GetConnect());
+
+            List<HistoryRecord> historyRecords = _historyController.GetHistoryByUsername(_username);
 
             if (historyRecords == null)
             {
                 return;
             }
 
+
             foreach (HistoryRecord record in historyRecords)
             {
 
-                ListViewItem listItem = new ListViewItem(record.Location); // Set the Text property for the first column
-                listItem.SubItems.Add(record.Temperature.ToString("F2"));
-                listItem.SubItems.Add(record.Conditions);
-                historyListView.Items.Add(listItem);
+                AddListItem(historyListView, record);
             }
-            dbController.Dispose();
+            _historyController.Dispose();
+            _dbController.Dispose();
         }
 
-        private void historyListView_SelectedIndexChanged(object sender, EventArgs e)
+        private void AddListItem(System.Windows.Forms.ListView listView, HistoryRecord record)
         {
-            if (historyListView.SelectedItems.Count > 0)
-            {
-                ListViewItem selectedItem = historyListView.SelectedItems[0];
-
-                string location = selectedItem.SubItems[0].Text;
-                string temperature = selectedItem.SubItems[1].Text;
-                string conditions = selectedItem.SubItems[2].Text;
-
-
-                MessageBox.Show($"location: {location}, temp: {temperature}, conditions: {conditions}");
-
-            }
+            ListViewItem listItem = new ListViewItem(record.Location);
+            listItem.SubItems.Add(record.Temperature.ToString());
+            listItem.SubItems.Add(record.Conditions);
+            listItem.SubItems.Add($"{record.Date.ToShortDateString()} at {record.Date.ToShortTimeString()}");
+            listView.Items.Add(listItem);
         }
-
-
     }
 }

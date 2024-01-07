@@ -33,8 +33,9 @@
             this.conditionLabel = new System.Windows.Forms.Label();
             this.cityLabel = new System.Windows.Forms.Label();
             this.labelsGroupPanel = new System.Windows.Forms.Panel();
-            this.buttonComponent1 = new WeatherApp.ButtonComponent();
+            this.mottoLabel = new System.Windows.Forms.Label();
             this.outputField = new System.Windows.Forms.Label();
+            this.buttonComponent1 = new WeatherApp.ButtonComponent();
             this.labelsGroupPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,7 +47,6 @@
             this.input.Name = "input";
             this.input.Size = new System.Drawing.Size(269, 30);
             this.input.TabIndex = 1;
-            this.input.TextChanged += new System.EventHandler(this.Input_TextChanged);
             // 
             // temperatureLabel
             // 
@@ -56,7 +56,7 @@
             this.temperatureLabel.AutoSize = true;
             this.temperatureLabel.BackColor = System.Drawing.Color.Transparent;
             this.temperatureLabel.Font = new System.Drawing.Font("Algerian", 38F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.temperatureLabel.ForeColor = System.Drawing.Color.LightGray;
+            this.temperatureLabel.ForeColor = System.Drawing.Color.White;
             this.temperatureLabel.Location = new System.Drawing.Point(-1, 41);
             this.temperatureLabel.MinimumSize = new System.Drawing.Size(490, 0);
             this.temperatureLabel.Name = "temperatureLabel";
@@ -70,7 +70,7 @@
             this.conditionLabel.AutoSize = true;
             this.conditionLabel.BackColor = System.Drawing.Color.Transparent;
             this.conditionLabel.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.conditionLabel.ForeColor = System.Drawing.Color.Gainsboro;
+            this.conditionLabel.ForeColor = System.Drawing.Color.White;
             this.conditionLabel.Location = new System.Drawing.Point(-1, 237);
             this.conditionLabel.MinimumSize = new System.Drawing.Size(490, 0);
             this.conditionLabel.Name = "conditionLabel";
@@ -86,8 +86,8 @@
             this.cityLabel.AutoSize = true;
             this.cityLabel.BackColor = System.Drawing.Color.Transparent;
             this.cityLabel.Font = new System.Drawing.Font("Georgia", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cityLabel.ForeColor = System.Drawing.Color.LightGray;
-            this.cityLabel.Location = new System.Drawing.Point(-6, 0);
+            this.cityLabel.ForeColor = System.Drawing.Color.White;
+            this.cityLabel.Location = new System.Drawing.Point(-5, 1);
             this.cityLabel.MinimumSize = new System.Drawing.Size(500, 0);
             this.cityLabel.Name = "cityLabel";
             this.cityLabel.Size = new System.Drawing.Size(500, 23);
@@ -99,7 +99,7 @@
             // 
             this.labelsGroupPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.labelsGroupPanel.BackColor = System.Drawing.Color.Transparent;
-            this.labelsGroupPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelsGroupPanel.Controls.Add(this.mottoLabel);
             this.labelsGroupPanel.Controls.Add(this.temperatureLabel);
             this.labelsGroupPanel.Controls.Add(this.cityLabel);
             this.labelsGroupPanel.Controls.Add(this.conditionLabel);
@@ -107,6 +107,36 @@
             this.labelsGroupPanel.Name = "labelsGroupPanel";
             this.labelsGroupPanel.Size = new System.Drawing.Size(490, 608);
             this.labelsGroupPanel.TabIndex = 6;
+            // 
+            // mottoLabel
+            // 
+            this.mottoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.mottoLabel.AutoEllipsis = true;
+            this.mottoLabel.AutoSize = true;
+            this.mottoLabel.BackColor = System.Drawing.Color.Gray;
+            this.mottoLabel.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mottoLabel.ForeColor = System.Drawing.Color.White;
+            this.mottoLabel.Location = new System.Drawing.Point(1, 588);
+            this.mottoLabel.MinimumSize = new System.Drawing.Size(490, 20);
+            this.mottoLabel.Name = "mottoLabel";
+            this.mottoLabel.Size = new System.Drawing.Size(490, 20);
+            this.mottoLabel.TabIndex = 6;
+            this.mottoLabel.Text = "Motto";
+            this.mottoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // outputField
+            // 
+            this.outputField.AutoEllipsis = true;
+            this.outputField.AutoSize = true;
+            this.outputField.BackColor = System.Drawing.Color.Transparent;
+            this.outputField.Font = new System.Drawing.Font("Georgia", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.outputField.ForeColor = System.Drawing.Color.Red;
+            this.outputField.Location = new System.Drawing.Point(3, 138);
+            this.outputField.MaximumSize = new System.Drawing.Size(500, 0);
+            this.outputField.Name = "outputField";
+            this.outputField.Size = new System.Drawing.Size(50, 17);
+            this.outputField.TabIndex = 8;
+            this.outputField.Text = "label1";
             // 
             // buttonComponent1
             // 
@@ -122,20 +152,6 @@
             this.buttonComponent1.Size = new System.Drawing.Size(204, 30);
             this.buttonComponent1.TabIndex = 7;
             this.buttonComponent1.ButtonClick += new System.EventHandler(this.SubmitButton_Click);
-            // 
-            // outputField
-            // 
-            this.outputField.AutoEllipsis = true;
-            this.outputField.AutoSize = true;
-            this.outputField.BackColor = System.Drawing.Color.Transparent;
-            this.outputField.Font = new System.Drawing.Font("Georgia", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.outputField.ForeColor = System.Drawing.Color.Red;
-            this.outputField.Location = new System.Drawing.Point(3, 138);
-            this.outputField.MaximumSize = new System.Drawing.Size(500, 0);
-            this.outputField.Name = "outputField";
-            this.outputField.Size = new System.Drawing.Size(50, 17);
-            this.outputField.TabIndex = 8;
-            this.outputField.Text = "label1";
             // 
             // HomePage
             // 
@@ -162,5 +178,6 @@
         private System.Windows.Forms.Panel labelsGroupPanel;
         private ButtonComponent buttonComponent1;
         private System.Windows.Forms.Label outputField;
+        private System.Windows.Forms.Label mottoLabel;
     }
 }

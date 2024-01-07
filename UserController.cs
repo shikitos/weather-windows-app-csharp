@@ -4,16 +4,17 @@ using System.Collections.Generic;
 
 namespace WeatherApp
 {
-    public class UserController
+    public class UserController : IDisposable
     {
-        private readonly NpgsqlConnection connection;
+        private readonly NpgsqlConnection _connection;
+        private bool _disposed = false;
         public UserController(NpgsqlConnection npgsqlConnection) {
-            connection = npgsqlConnection;
+            _connection = npgsqlConnection;
         }
 
         public int FindUser(string username)
         {
-            var command = new NpgsqlCommand("SELECT * FROM Users WHERE user_username = @username", connection);
+            var command = new NpgsqlCommand("SELECT * FROM Users WHERE user_username = @username", _connection);
             command.Parameters.AddWithValue("@username", username);
 
             try
@@ -34,16 +35,14 @@ namespace WeatherApp
             }
             catch (NpgsqlException ex)
             {
-                Console.WriteLine("Database error: " + ex.Message);
+                throw ex;
             }
-
-            return -1;
         }
 
 
         public bool RegisterUser(string username, string password)
         {
-            var insertCommand = new NpgsqlCommand("INSERT INTO Users (user_username, user_password) VALUES (@username, @password)", connection);
+            var insertCommand = new NpgsqlCommand("INSERT INTO Users (user_username, user_password) VALUES (@username, @password)", _connection);
             insertCommand.Parameters.AddWithValue("@username", username);
             insertCommand.Parameters.AddWithValue("@password", password);
 
@@ -54,7 +53,6 @@ namespace WeatherApp
             }
             catch (NpgsqlException ex)
             {
-                Console.WriteLine("Database error: " + ex.Message);
                 return false;
             }
         }
@@ -62,7 +60,7 @@ namespace WeatherApp
 
         public bool LoginUser(string username, string password)
         {
-            var command = new NpgsqlCommand("SELECT * FROM Users WHERE user_username = @username", connection);
+            var command = new NpgsqlCommand("SELECT * FROM Users WHERE user_username = @username", _connection);
             command.Parameters.AddWithValue("@username", username);
 
             try
@@ -79,8 +77,7 @@ namespace WeatherApp
             }
             catch (NpgsqlException ex)
             {
-                Console.WriteLine("Database error: " + ex.Message);
-                return false;
+                throw ex;
             }
         }
 
@@ -89,7 +86,7 @@ namespace WeatherApp
         {
             List<User> userList = new List<User>();
 
-            var command = new NpgsqlCommand("SELECT * FROM Users", connection);
+            var command = new NpgsqlCommand("SELECT * FROM Users", _connection);
 
             try
             {
@@ -110,10 +107,35 @@ namespace WeatherApp
             }
             catch (NpgsqlException ex)
             {
-                Console.WriteLine("Database error: " + ex.Message);
+                throw ex;
             }
 
             return userList;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _connection?.Dispose();
+                }
+
+
+                _disposed = true;
+            }
+        }
+
+        ~UserController()
+        {
+            Dispose(false);
         }
 
     }

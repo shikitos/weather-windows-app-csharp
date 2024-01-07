@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -8,9 +7,11 @@ namespace WeatherApp
     public partial class WelcomePage : UserControl
     {
         private readonly UserHistoryManager historyManager = UserHistoryManager.Instance;
-        public WelcomePage()
+        private readonly MainForm _mainForm;
+        public WelcomePage(MainForm mainForm)
         {
             InitializeComponent();
+            _mainForm = mainForm;
         }
 
         private void LoginLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -18,16 +19,16 @@ namespace WeatherApp
             Control[] currentView = ViewController.GetCurrentView();
             historyManager.PushToHistory(currentView);
 
-            Control[] controlsToShow = { MainForm.Instance.HeaderComponent, MainForm.Instance.LoginPage }; 
+            Control[] controlsToShow = { _mainForm.HeaderComponent, _mainForm.LoginPage }; 
             ViewController.ShowView(controlsToShow);
         }
 
 
         private void ButtonStart_Click(object sender, EventArgs e)
         {
-            Control[] controlsToShow = { MainForm.Instance.HeaderComponent, MainForm.Instance.HomePage };
+            Control[] controlsToShow = { _mainForm.HeaderComponent, _mainForm.HomePage };
             ViewController.ShowView(controlsToShow);
-            MainForm.Instance.HeaderComponent.UpdateBackButtonVisibility(false);
+            _mainForm.HeaderComponent.UpdateBackButtonVisibility(false);
         }
     }
 }

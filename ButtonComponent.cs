@@ -24,7 +24,7 @@ namespace WeatherApp
             button.Font = new Font("Segoe UI", 14, FontStyle.Bold);
             button.TextAlign = ContentAlignment.MiddleCenter;
 
-            this.Controls.Add(button);
+            Controls.Add(button);
         }
 
         [Browsable(true)]
@@ -89,7 +89,7 @@ namespace WeatherApp
 
         private void CustomButton_Resize(object sender, EventArgs e)
         {
-            button.Size = new Size(this.ClientSize.Width, this.ClientSize.Height);
+            button.Size = new Size(ClientSize.Width, ClientSize.Height);
         }
     }
 }

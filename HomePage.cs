@@ -1,28 +1,33 @@
-﻿using System;
-using System.Diagnostics;
+﻿using Npgsql;
+using System;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WeatherApp
 {
     public partial class HomePage : UserControl
     {
-        private readonly WeatherAPI weatherApi;
-        private static LinkLabel historyLink;
-        private DatabaseController dbController;
-        private bool isRegistered = false;
-        private HistoryController historyController;
-        Auth auth;
+        private readonly WeatherAPI _weatherApi;
+        private static LinkLabel _historyLink;
+        private DatabaseController _dbController;
+        private HistoryController _historyController;
+        private Auth _auth;
+        private HistoryForm _historyForm;
+        private bool _isLogged = false;
 
-        public HomePage()
+        private readonly MainForm _mainForm;
+
+        public HomePage(MainForm mainForm)
         {
             InitializeComponent();
             labelsGroupPanel.Visible = false;
-            weatherApi = new WeatherAPI();
+            _weatherApi = new WeatherAPI();
 
             input.KeyDown += Input_KeyDown;
             outputField.Text = "";
+            _mainForm = mainForm;
         }
 
         private void SubmitButton_Click(object sender, EventArgs e)
@@ -41,61 +46,92 @@ namespace WeatherApp
         private async void FetchWeatherData()
         {
             string place = input.Text;
-            if (!string.IsNullOrWhiteSpace(place))
+            if (!ValidatePlace(place)) return;
+
+            try
             {
-                try
-                {
-                    WeatherResponse weatherJson = await weatherApi.GetWeatherAsync(place, 3);
-
-                    string weatherDescription = weatherJson.Current.Condition.Text;
-                    double temperatureCelsius = weatherJson.Current.Temp_C;
-
-                    string weatherMotto = GetWeatherMotto(place, weatherDescription);
-
-                    Debug.WriteLine("weatherJson.Location.Localtime", weatherJson.Location.Localtime);
-                    /*outputField.Text = $"Current Weather in {place}:\n" +
-                                      $"- Condition: {weatherDescription}\n" +
-                                      $"- Temperature: {temperatureCelsius} °C\n" +
-                                      $"{weatherMotto}";*/
-
-                    cityLabel.Text = weatherJson.Location.Name;
-                    temperatureLabel.Text = $"{temperatureCelsius} °";
-                    conditionLabel.Text = $"{weatherDescription}";
-                    labelsGroupPanel.Visible = true;
-
-                    string imageName = WeatherControllerUtility.GetConditionImage(weatherJson.Current.Condition, weatherJson.Location.Localtime);
-                    string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $@"Assets\Images\{imageName}");
-
-                    if (File.Exists(imagePath))
-                    {
-                        Image backgroundImage = Image.FromFile(imagePath);
-                        BackgroundImage = backgroundImage;
-                        BackgroundImageLayout = ImageLayout.Stretch;
-                    }
-
-                    if (historyController != null && isRegistered)
-                    {
-
-                        dbController = new DatabaseController();
-                        historyController.PutHistory(auth.Username, place, temperatureCelsius, weatherDescription);
-                        dbController.Dispose();
-                    }
-                }
-                catch (System.Net.WebException webEx)
-                {
-                    outputField.Text = "Network error: " + webEx.Message;
-                    Debug.WriteLine("Network error: " + webEx.Message);
-                }
-                catch (Exception ex)
-                {
-                    outputField.Text = "Error: " + ex.Message;
-                    Debug.WriteLine("Error: " + ex.Message);
-                }
+                WeatherResponse weatherJson = await FetchWeather(place);
+                UpdateUIWithWeatherData(weatherJson);
+                LoadBackgroundImage(weatherJson);
+                LogWeatherHistory(weatherJson);
             }
-            else
+            catch (System.Net.WebException webEx)
             {
-                Debug.WriteLine("Please enter a valid city name");
-                outputField.Text = "Please enter a valid city name";
+                Utils.HandleError(webEx, outputField);
+            }
+            catch (Exception ex)
+            {
+                Utils.HandleError(ex, outputField);
+            }
+        }
+
+        private async Task<WeatherResponse> FetchWeather(string place)
+        {
+            return await _weatherApi.GetWeatherAsync(place, 1);
+        }
+
+        private bool ValidatePlace(string place)
+        {
+            if (!string.IsNullOrWhiteSpace(place)) return true;
+
+            outputField.Text = "Please enter a valid city name";
+            return false;
+        }
+
+        private void UpdateUIWithWeatherData(WeatherResponse weatherJson)
+        {
+            string weatherDescription = weatherJson.Current.Condition.Text;
+            double temperatureCelsius = weatherJson.Current.Temp_C;
+            string location = weatherJson.Location.Name;
+
+            cityLabel.Text = location;
+            temperatureLabel.Text = $"{temperatureCelsius} °C";
+            conditionLabel.Text = weatherDescription;
+            mottoLabel.Text = GetWeatherMotto(location, weatherDescription);
+            outputField.Text = "";
+
+            labelsGroupPanel.Visible = true;
+
+        }
+
+        private void LoadBackgroundImage(WeatherResponse weatherJson)
+        {
+            string imageName = WeatherControllerUtility.GetConditionImage(weatherJson.Current.Condition, weatherJson.Location.Localtime);
+            string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $@"Assets\Images\{imageName}");
+
+            if (File.Exists(imagePath))
+            {
+                Image backgroundImage = Image.FromFile(imagePath);
+                BackgroundImage = backgroundImage;
+                BackgroundImageLayout = ImageLayout.Stretch;
+            }
+        }
+
+        private void LogWeatherHistory(WeatherResponse weatherJson)
+        {
+            if (!_isLogged) return;
+
+            _dbController = new DatabaseController();
+            NpgsqlConnection connection = _dbController.GetConnect();
+            _historyController = new HistoryController(connection);
+
+            string place = weatherJson.Location.Name;
+            double temperatureCelsius = weatherJson.Current.Temp_C;
+            string weatherDescription = weatherJson.Current.Condition.Text;
+
+            _historyController.PutHistory(_auth.Username, place, temperatureCelsius, weatherDescription);
+
+            _historyController.Dispose();
+            _dbController.Dispose();
+
+            UpdateHistoryForm();
+        }
+
+        private void UpdateHistoryForm()
+        {
+            if (_historyForm != null && _historyForm.Visible)
+            {
+                _historyForm.PopulateHistoryListView();
             }
         }
 
@@ -113,29 +149,21 @@ namespace WeatherApp
             }
             else
             {
-                motto = $"Explore the unique weather in {place}!";
+                motto = $"🌪️ Explore the unique weather in {place}!";
             }
 
             return motto;
         }
 
-        private void Input_TextChanged(object sender, EventArgs e)
-        {
-            /*if (outputField.Text.Length > 0)
-            {
-                outputField.Text = "";
-            }*/
-        }
-
         private void HistoryLabel_LinkClicked(object sender, EventArgs e)
         {
-            HistoryForm historyForm = new HistoryForm(auth.Username);
-            historyForm.Show();
+            _historyForm = new HistoryForm(_auth.Username);
+            _historyForm.Show();
         }
 
         public void UserLoggedIn()
         {
-            historyLink = new LinkLabel
+            _historyLink = new LinkLabel
             {
                 Location = new Point(2, 80),
                 Cursor = Cursors.Hand,
@@ -143,13 +171,10 @@ namespace WeatherApp
                 BackColor = Color.Transparent,
             };
 
-            Controls.Add(historyLink);
-            historyLink.Click += HistoryLabel_LinkClicked;
-            dbController = new DatabaseController();
-            historyController = new HistoryController(dbController.Connect());
-            isRegistered = true;
-            auth = MainForm.Instance.Auth;
-            dbController.Dispose();
+            Controls.Add(_historyLink);
+            _historyLink.Click += HistoryLabel_LinkClicked;
+            _auth = _mainForm.Auth;
+            _isLogged = true;
         }
 
     }

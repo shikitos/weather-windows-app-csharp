@@ -1,8 +1,5 @@
-﻿using CefSharp.DevTools.Debugger;
-using Npgsql;
+﻿using Npgsql;
 using System;
-using System.Collections.Generic;
-using WeatherApp;
 
 public class DatabaseController : IDisposable
 {
@@ -26,7 +23,7 @@ public class DatabaseController : IDisposable
         connection.Open();
     }
 
-    public NpgsqlConnection Connect()
+    public NpgsqlConnection GetConnect()
     {
         return connection;
     }
@@ -46,8 +43,7 @@ public class DatabaseController : IDisposable
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error: " + ex.Message);
-            return false;
+            throw ex;
         }
     }
 

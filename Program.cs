@@ -37,12 +37,10 @@ namespace WeatherApp
                 return;
             }
 
-
-            string connectionString = $"Server={DBServerAddress};Port={DBPort};User Id={DBUsername};Password={DBPassword};";
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            MainForm mainForm = new MainForm();
+            Application.Run(mainForm);
         }
     }
 }

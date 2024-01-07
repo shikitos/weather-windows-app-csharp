@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class WeatherControllerUtility
+public static class WeatherControllerUtility
 {
     public static string GetConditionImage(Condition condition, string requestTime)
     {

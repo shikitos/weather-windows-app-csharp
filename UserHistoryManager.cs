@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace WeatherApp
 {
-    public class UserHistoryManager
+    internal class UserHistoryManager
     {
         private static UserHistoryManager instance;
 
@@ -14,9 +11,7 @@ namespace WeatherApp
 
         public int GetUserHistoryLength => historyStack.Count;
 
-        private UserHistoryManager()
-        {
-        }
+        private UserHistoryManager() { }
 
         public static UserHistoryManager Instance
         {

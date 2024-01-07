@@ -116,7 +116,6 @@
             this.Controls.Add(this.label1);
             this.Name = "LoginPage";
             this.Size = new System.Drawing.Size(350, 300);
-            this.Load += new System.EventHandler(this.LoginPage_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

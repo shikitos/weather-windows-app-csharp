@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
+﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace WeatherApp
@@ -9,51 +7,75 @@ namespace WeatherApp
     public partial class MainForm : Form
     {
         public static MainForm Instance { get; private set; }
-        private Auth userAuth;
-
+        private readonly Auth _userAuth;
 
         public MainForm()
         {
             InitializeComponent();
-            Instance = this;
 
+            AddControls();
+
+            Instance = this;
+            ModifyFormContainer();
+
+            _userAuth = Auth.GetInstance();
+        }
+
+        private void AddControls()
+        {
+            Type[] controlsList = CustomControlsProperties.GetControlsList;
+
+            foreach (Type controlType in controlsList)
+            {
+                if (typeof(Control).IsAssignableFrom(controlType))
+                {
+                    Control controlInstance = (Control)Activator.CreateInstance(controlType, new[] { this });
+
+                    Controls.Add(controlInstance);
+                    controlInstance.Location = CustomControlsProperties.GetControlLocation(controlType);
+                    controlInstance.Size = CustomControlsProperties.GetControlSize(controlType);
+                }
+            }
+        }
+
+        private void ModifyFormContainer()
+        {
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-
-            userAuth = Auth.GetInstance();
         }
 
         public HeaderComponent HeaderComponent
         {
-            get { return headerComponent1; }
+            get { return Controls.OfType<HeaderComponent>().FirstOrDefault(); }
         }
         public LoginPage LoginPage
         {
-            get { return loginPage1; }
+            get { return Controls.OfType<LoginPage>().FirstOrDefault(); }
         }
         public RegisterPage RegisterPage
         {
-            get { return registerPage1; }
+            get { return Controls.OfType<RegisterPage>().FirstOrDefault(); }
         }
         public HomePage HomePage
         {
-            get { return homePage1; }
+            get { return Controls.OfType<HomePage>().FirstOrDefault(); }
         }
         public WelcomePage WelcomePage
         {
-            get { return welcomePage1; }
+            get { return Controls.OfType<WelcomePage>().FirstOrDefault(); }
         }
 
         public Auth Auth
         {
-            get { return userAuth; }
+            get { return _userAuth; }
         }
 
-        private void MainForm_Load(object sender, System.EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
+
             foreach (Control control in Controls)
             {
-                control.Visible = control == welcomePage1;
+                control.Visible = control == WelcomePage;
             }
         }
 
