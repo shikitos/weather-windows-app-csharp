@@ -1,6 +1,7 @@
 ﻿using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace WeatherApp
 {
@@ -51,8 +52,9 @@ namespace WeatherApp
                 insertCommand.ExecuteNonQuery();
                 return true;
             }
-            catch (NpgsqlException ex)
+            catch (NpgsqlException e)
             {
+                MessageBox.Show("Error: " + e.Message);
                 return false;
             }
         }

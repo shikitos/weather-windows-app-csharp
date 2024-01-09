@@ -57,7 +57,6 @@
             this.userNameLabel.Size = new System.Drawing.Size(0, 17);
             this.userNameLabel.MaximumSize = new System.Drawing.Size(100, 17);
             this.userNameLabel.TabIndex = 16;
-            this.userNameLabel.Click += new System.EventHandler(this.userNameLabel_Click);
             // 
             // authButton
             // 
@@ -68,7 +67,6 @@
             this.authButton.TabIndex = 15;
             this.authButton.Text = "Sign In";
             this.authButton.UseVisualStyleBackColor = true;
-            this.authButton.Click += new System.EventHandler(this.authButton_Click_1);
             // 
             // backButton
             // 
@@ -95,7 +93,6 @@
             this.Controls.Add(this.authButton);
             this.Name = "HeaderComponent";
             this.Size = new System.Drawing.Size(500, 34);
-            this.Load += new System.EventHandler(this.HeaderComponent_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

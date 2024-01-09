@@ -89,6 +89,7 @@ namespace WeatherApp
             conditionLabel.Text = weatherDescription;
             mottoLabel.Text = GetWeatherMotto(location, weatherDescription);
             outputField.Text = "";
+            input.Text = "";
 
             labelsGroupPanel.Visible = true;
 

@@ -36,6 +36,7 @@ namespace WeatherApp
                     controlInstance.Size = CustomControlsProperties.GetControlSize(controlType);
                 }
             }
+            this.HeaderComponent.ReinitForm += Reinit;
         }
 
         private void ModifyFormContainer()
@@ -79,5 +80,14 @@ namespace WeatherApp
             }
         }
 
+        private void Reinit()
+        {
+            Controls.Clear();
+            AddControls();
+            foreach (Control control in Controls)
+            {
+                control.Visible = control == WelcomePage;
+            }
+        }
     }
 }

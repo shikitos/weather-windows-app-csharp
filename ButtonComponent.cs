@@ -30,7 +30,7 @@ namespace WeatherApp
         [Browsable(true)]
         [Category("Appearance")]
         [Description("The name of the button (inside code).")]
-        public new string ButtonName
+        public string ButtonName
         {
             get { return button.Name; }
             set { button.Name = value; }
